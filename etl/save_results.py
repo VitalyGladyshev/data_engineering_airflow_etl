@@ -143,5 +143,5 @@ def save_results_batch(file_paths: List[str], config: Dict) -> Dict[str, bool]:
     gdrive_folder_id = config.get('folder_id', '')
     backup_dir = config.get('backup_dir', '/home/viv232/breast_cancer_etl/results')
     credentials_path = config.get('credentials_path', '/home/viv232/breast_cancer_etl/config/credentials.json')
-    
+
     return save_multiple_files(file_paths, gdrive_folder_id, backup_dir, credentials_path)

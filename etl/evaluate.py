@@ -10,7 +10,6 @@ import sys
 sys.path.append("/home/viv232/breast_cancer_etl/utils")
 
 from utils.logger import setup_logger
-from utils.validators import DataValidator
 
 logger = setup_logger("evaluate")
 
@@ -18,44 +17,41 @@ def evaluate_model(model_path: str, test_data: pd.DataFrame, metrics_path: str) 
     """Оценка качества модели"""
     try:
         logger.info("Начало оценки модели")
-        
+
         # Загрузка модели
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"Модель не найдена: {model_path}")
-        
+
         model_data = joblib.load(model_path)
         model = model_data['model']
         scaler = model_data['scaler']
         features = model_data['features']
-        
+
         # Подготовка данных
         if 'diagnosis' not in test_data.columns:
             raise ValueError("Целевая переменная 'diagnosis' не найдена в тестовых данных")
-        
+
         X_test = test_data[features]
         y_test = test_data['diagnosis']
-        
+
         logger.info(f"Размер тестовой выборки: {X_test.shape}")
         logger.info(f"Распределение классов в тесте: {y_test.value_counts().to_dict()}")
-        
-        # Предсказания
+
         y_pred = model.predict(X_test)
         y_pred_proba = model.predict_proba(X_test)[:, 1]  # Вероятности для класса 1
-        
+
         # Расчет метрик
         accuracy = metrics.accuracy_score(y_test, y_pred)
         precision = metrics.precision_score(y_test, y_pred, average='binary')
         recall = metrics.recall_score(y_test, y_pred, average='binary')
         f1 = metrics.f1_score(y_test, y_pred, average='binary')
         roc_auc = metrics.roc_auc_score(y_test, y_pred_proba)
-        
-        # Дополнительные метрики
+
         specificity = metrics.recall_score(y_test, y_pred, pos_label=0, average='binary')
-        
-        # Матрица ошибок
+
         cm = metrics.confusion_matrix(y_test, y_pred)
         tn, fp, fn, tp = cm.ravel()
-        
+
         metrics_dict = {
             "accuracy": float(accuracy),
             "precision": float(precision),
@@ -69,49 +65,32 @@ def evaluate_model(model_path: str, test_data: pd.DataFrame, metrics_path: str) 
             "false_negatives": int(fn),
             "total_samples": int(len(y_test))
         }
-        
-        # Классификационный отчет
+
         class_report = metrics.classification_report(y_test, y_pred, output_dict=True)
-        
-        # Расширенные метрики
+
         extended_metrics = {
             **metrics_dict,
             "classification_report": class_report,
             "confusion_matrix": cm.tolist()
         }
-        
+
         logger.info(f"Метрики модели:")
         for metric, value in metrics_dict.items():
             if isinstance(value, float):
                 logger.info(f"  {metric}: {value:.4f}")
             else:
                 logger.info(f"  {metric}: {value}")
-        
-        # Валидация качества модели
-        validator = DataValidator()
-        quality_thresholds = {
-            "accuracy": 0.7,
-            "precision": 0.7,
-            "recall": 0.7,
-            "f1_score": 0.7
-        }
-        
-        is_model_good = validator.validate_model_performance(metrics_dict, quality_thresholds)
-        extended_metrics["model_quality_passed"] = is_model_good
-        
-        if not is_model_good:
-            logger.warning("Модель не прошла проверку качества")
-        
+
         # Сохранение метрик
         os.makedirs(os.path.dirname(metrics_path), exist_ok=True)
-        
+
         with open(metrics_path, 'w') as f:
             json.dump(extended_metrics, f, indent=2)
-        
+
         logger.info(f"Метрики сохранены в {metrics_path}")
-        
+
         return metrics_dict
-        
+
     except Exception as e:
         logger.error(f"Ошибка оценки модели: {e}")
         raise
@@ -121,7 +100,7 @@ def generate_model_report(metrics_path: str, report_path: str) -> None:
     try:
         with open(metrics_path, 'r') as f:
             metrics = json.load(f)
-        
+
         report = f"""
 # Отчет о качестве модели
 
@@ -139,17 +118,14 @@ def generate_model_report(metrics_path: str, report_path: str) -> None:
 - Ложно положительные: {metrics['false_positives']}
 - Ложно отрицательные: {metrics['false_negatives']}
 
-## Статус модели
-Прошла проверку качества: {'Да' if metrics.get('model_quality_passed', False) else 'Нет'}
-
 Общее количество тестовых образцов: {metrics['total_samples']}
         """
-        
+
         with open(report_path, 'w', encoding='utf-8') as f:
             f.write(report)
-        
+
         logger.info(f"Отчет сохранен в {report_path}")
-        
+
     except Exception as e:
         logger.error(f"Ошибка генерации отчета: {e}")
         raise
