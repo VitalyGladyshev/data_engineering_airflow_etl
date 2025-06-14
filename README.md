@@ -1,4 +1,4 @@
-# Automated ETL Pipeline for Breast Cancer Diagnosis
+# ETL конвейер задачи Breast Cancer Diagnosis
 
 ## Цель проекта
 
