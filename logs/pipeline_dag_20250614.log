@@ -1,0 +1,11 @@
+2025-06-14 11:03:42,314 - pipeline_dag - ERROR - Ошибка загрузки конфигурации: [Errno 2] No such file or directory: '/config/config.yaml'
+2025-06-14 13:59:14,610 - pipeline_dag - INFO - Данные загружены и сохранены в /home/viv232/breast_cancer_etl/tmp/loaded_data.pkl
+2025-06-14 13:59:16,607 - pipeline_dag - INFO - Данные обработаны и сохранены в /home/viv232/breast_cancer_etl/tmp/processed_data.pkl
+2025-06-14 13:59:18,794 - pipeline_dag - INFO - Модель обучена и сохранена в /home/viv232/breast_cancer_etl/data/models/model.joblib
+2025-06-14 13:59:20,416 - pipeline_dag - INFO - Модель оценена, метрики сохранены в /home/viv232/breast_cancer_etl/data/metrics/metrics.json
+2025-06-14 13:59:22,543 - pipeline_dag - INFO - Сохранено 3 из 3 файлов
+2025-06-14 13:59:23,664 - pipeline_dag - INFO - Удален временный файл: /home/viv232/breast_cancer_etl/tmp/loaded_data.pkl
+2025-06-14 13:59:23,664 - pipeline_dag - INFO - Удален временный файл: /home/viv232/breast_cancer_etl/tmp/test_data.pkl
+2025-06-14 13:59:23,665 - pipeline_dag - INFO - Удален временный файл: /home/viv232/breast_cancer_etl/tmp/processed_data.pkl
+2025-06-14 13:59:23,665 - pipeline_dag - INFO - Очистка временных файлов завершена
+2025-06-14 13:59:24,558 - pipeline_dag - INFO - ETL пайплайн успешно завершен

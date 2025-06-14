@@ -1,0 +1,4 @@
+2025-06-14 13:59:14,588 - load_data - INFO - Начало загрузки данных из /home/viv232/breast_cancer_etl/data/raw/data.csv
+2025-06-14 13:59:14,600 - load_data - INFO - Данные успешно загружены. Размер: (569, 33)
+2025-06-14 13:59:14,600 - load_data - INFO - Колонки: ['id', 'diagnosis', 'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean', 'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean', 'symmetry_mean', 'fractal_dimension_mean', 'radius_se', 'texture_se', 'perimeter_se', 'area_se', 'smoothness_se', 'compactness_se', 'concavity_se', 'concave points_se', 'symmetry_se', 'fractal_dimension_se', 'radius_worst', 'texture_worst', 'perimeter_worst', 'area_worst', 'smoothness_worst', 'compactness_worst', 'concavity_worst', 'concave points_worst', 'symmetry_worst', 'fractal_dimension_worst', 'Unnamed: 32']
+2025-06-14 13:59:14,608 - load_data - WARNING - Проблемы с качеством данных: ['Колонка Unnamed: 32 имеет 100.0% пропущенных значений']
