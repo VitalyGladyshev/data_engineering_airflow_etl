@@ -19,7 +19,7 @@
 5. **Save Results**: Выгрузка результатов в Google Drive
 
 ### Структура проекта
-
+```
 breast_cancer_etl/
 ├── config/
 │   ├── config.yaml
@@ -43,3 +43,15 @@ breast_cancer_etl/
 ├── requirements.txt
 ├── test_imports.py
 └── README.md
+```
+## Скриншоты исполнения
+
+![Запуск в Airflow](images/2025-06-14_14-00-26.png) 
+
+![Граф конвейера](images/2025-06-14_14-01-03.png)
+
+![DAG](images/2025-06-14_14-02-46.png)
+
+![Дерево проекта в WSL](images/2025-06-14_14-06-48.png)
+
+![Метрики](images/2025-06-14_14-07-23.png)
