@@ -1,0 +1,27 @@
+data:
+  raw_path: "/home/viv232/breast_cancer_etl/data/raw/data.csv"
+  processed_path: "/home/viv232/breast_cancer_etl/data/processed/"
+  
+model:
+  path: "/home/viv232/breast_cancer_etl/data/models/model.joblib"
+  algorithm: "LogisticRegression"
+  test_size: 0.3
+  random_state: 42
+  max_iter: 10000
+
+metrics:
+  path: "/home/viv232/breast_cancer_etl/data/metrics/metrics.json"
+  
+cloud:
+  provider: "google_drive"
+  folder_id: "1edqqfb2RdyvT_KALTQtiyQlQm8mzTWPo"
+  credentials_path: "/home/viv232/breast_cancer_etl/config/credentials.json"
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  
+airflow:
+  retries: 3
+  retry_delay_minutes: 5
+  timeout_seconds: 300
